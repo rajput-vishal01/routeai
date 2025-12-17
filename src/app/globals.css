@@ -1,0 +1,111 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+}
+
+/* ===================== */
+/* LIGHT MODE            */
+/* ===================== */
+:root {
+  /* Soft off-white (not pure white) */
+  --background: oklch(0.992 0.006 85);
+  --foreground: oklch(0.16 0.004 50);
+
+  --card: oklch(0.988 0.004 85);
+  --card-foreground: oklch(0.16 0.004 50);
+
+  --popover: oklch(0.988 0.004 85);
+  --popover-foreground: oklch(0.16 0.004 50);
+
+  /* ORANGE (clean, not loud) */
+  --primary: oklch(0.62 0.16 45);
+  --primary-foreground: oklch(0.99 0 0);
+
+  --accent: oklch(0.62 0.16 45);
+  --accent-foreground: oklch(0.99 0 0);
+
+  --secondary: oklch(0.965 0.002 286);
+  --secondary-foreground: oklch(0.22 0.006 285);
+
+  --muted: oklch(0.97 0.002 85);
+  --muted-foreground: oklch(0.55 0.01 55);
+
+  --border: oklch(0.92 0.003 55);
+  --input: oklch(0.92 0.003 55);
+  --ring: oklch(0.7 0.01 55);
+
+  --radius: 0.625rem;
+}
+
+/* ===================== */
+/* DARK MODE             */
+/* ===================== */
+.dark {
+  /* Neutral dark background */
+  --background: oklch(0.145 0.002 260);
+  --foreground: oklch(0.985 0 0);
+
+  --card: oklch(0.195 0.002 260);
+  --card-foreground: oklch(0.985 0 0);
+
+  --popover: oklch(0.195 0.002 260);
+  --popover-foreground: oklch(0.985 0 0);
+
+  /* SAME ORANGE FAMILY (slightly brighter for dark) */
+  --primary: oklch(0.7 0.18 45);
+  --primary-foreground: oklch(0.145 0.002 260);
+
+  --accent: oklch(0.7 0.18 45);
+  --accent-foreground: oklch(0.145 0.002 260);
+
+  --secondary: oklch(0.26 0.002 260);
+  --secondary-foreground: oklch(0.985 0 0);
+
+  --muted: oklch(0.24 0.002 260);
+  --muted-foreground: oklch(0.7 0 0);
+
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.55 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
