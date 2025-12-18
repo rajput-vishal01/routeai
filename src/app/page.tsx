@@ -1,5 +1,9 @@
-import { ComponentExample } from "@/components/component-example";
+import React from 'react'
 
-export default function Page() {
-return <ComponentExample />;
+function main() {
+  return (
+    <div>main</div>
+  )
 }
+
+export default main
