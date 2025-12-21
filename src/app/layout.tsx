@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Nunito_Sans } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import { QueryProvider } from "@/components/providers/query-provider";
+import { Toaster } from "sonner";
 
 const nunitoSans = Nunito_Sans({ variable: "--font-sans" });
 
@@ -39,6 +40,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+            <Toaster />
             {children}
           </ThemeProvider>
         </QueryProvider>

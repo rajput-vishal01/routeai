@@ -13,6 +13,8 @@ import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
 import { useAIModels } from "@/modules/ai-agent/hook/ai-agent";
 import { ModelSelector } from "./model-selector";
+import { toast } from "sonner";
+import { useCreateChat } from "../hooks/chat";
 
 interface ChatMessageFormProps {
   initialMessage?: string;
@@ -26,6 +28,9 @@ export default function ChatMessageForm({
   const [message, setMessage] = useState<string>("");
 
   const { data: models, isPending } = useAIModels();
+
+  const { mutateAsync, isPending: isChatPending } = useCreateChat();
+
   const [selectedModel, setSelectedModel] = useState<string | undefined>(
     undefined
   );
@@ -44,14 +49,18 @@ export default function ChatMessageForm({
     }
   }, [initialMessage, onMessageChange]);
 
-  const handleSubmit = (
+  const handleSubmit = async (
     e: FormEvent<HTMLFormElement> | KeyboardEvent<HTMLTextAreaElement>
-  ): void => {
+  ): Promise<void> => {
     try {
       e.preventDefault();
-      console.log("Message Sent");
+      await mutateAsync({ content: message, model: selectedModel });
+      toast.success("Message sent successfully");
     } catch (error) {
-      console.log(error);
+      console.error("Error sending message:", error);
+      toast.error("Failed to send message");
+    } finally {
+      setMessage("");
     }
   };
 
@@ -95,13 +104,19 @@ export default function ChatMessageForm({
 
             <Button
               type="submit"
-              disabled={!message.trim()}
+              disabled={!message.trim() || isChatPending}
               size="sm"
               variant={message.trim() ? "default" : "ghost"}
               className="h-8 w-8 p-0 rounded-full"
             >
-              <Send className="h-4 w-4" />
-              <span className="sr-only">Send Message</span>
+              {isChatPending ? (
+                <Spinner />
+              ) : (
+                <>
+                  <Send className="h-4 w-4" />
+                  <span className="sr-only">Send Message</span>
+                </>
+              )}
             </Button>
           </div>
         </div>
