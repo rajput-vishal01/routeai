@@ -44,7 +44,7 @@ interface ChatSidebarProps {
 }
 
 export function ChatSidebar({ user, chats }: ChatSidebarProps): JSX.Element {
-  const { activeChatId } = useChatStore();
+  const activeChatId = useChatStore((state) => state.activeChatId);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
 
@@ -122,7 +122,7 @@ export function ChatSidebar({ user, chats }: ChatSidebarProps): JSX.Element {
         href={`/chat/${chat.id}`}
         className={cn(
           "block rounded-lg px-3 py-2 text-sm text-sidebar-foreground hover:bg-sidebar-accent transition-colors",
-          chat.id === activeChatId && "bg-sidebar-accent"
+          chat.id === activeChatId && "bg-orange-100 dark:bg-orange-950/30"
         )}
       >
         <div className="flex flex-row justify-between items-center gap-2">

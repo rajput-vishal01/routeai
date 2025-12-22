@@ -1,6 +1,6 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { createChatWithMessage, deleteChat } from "../actions";
+import { createChatWithMessage, deleteChat, getChatById } from "../actions";
 import { toast } from "sonner";
 
 type CreateChatValues = {
@@ -13,6 +13,12 @@ type CreateChatResponse = {
   data?: {
     id: string;
   };
+};
+
+type ActionResponse<T = unknown> = {
+  success: boolean;
+  message: string;
+  data?: T;
 };
 
 export const useCreateChat = () => {
@@ -34,6 +40,14 @@ export const useCreateChat = () => {
       console.error("Create chat error:", error);
       toast.error("Failed to create chat");
     },
+  });
+};
+
+export const useGetChatById = (chatId: string) => {
+  return useQuery<ActionResponse>({
+    queryKey: ["chats", chatId],
+    queryFn: () => getChatById(chatId),
+    enabled: !!chatId,
   });
 };
 
