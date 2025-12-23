@@ -17,6 +17,8 @@ interface ChatStore {
   messages: Message[]; // messages for active chat
   activeChatId: string | null; // currently opened chat (optional, not route-driven)
 
+  triggeredChats: Set<string>; // Track which chats have been auto-triggered
+
   setChats: (chats: Chat[]) => void;
   setMessages: (messages: Message[]) => void;
   setActiveChatId: (chatId: string | null) => void;
@@ -29,12 +31,16 @@ interface ChatStore {
 
   // clear messages when switching chat
   clearMessages: () => void;
+
+  markChatAsTriggered: (chatId: string) => void;
+  hasChatBeenTriggered: (chatId: string) => boolean;
 }
 
 export const useChatStore = create<ChatStore>((set, get) => ({
   chats: [],
   messages: [],
   activeChatId: null,
+  triggeredChats: new Set(), // Track which chats have been auto-triggered
 
   setChats: (chats) => set({ chats }),
 
@@ -56,4 +62,14 @@ export const useChatStore = create<ChatStore>((set, get) => ({
 
   // clear messages when switching chat
   clearMessages: () => set({ messages: [] }),
+
+  markChatAsTriggered: (chatId) => {
+    const triggered = new Set(get().triggeredChats);
+    triggered.add(chatId);
+    set({ triggeredChats: triggered });
+  },
+
+  hasChatBeenTriggered: (chatId) => {
+    return get().triggeredChats.has(chatId);
+  },
 }));
