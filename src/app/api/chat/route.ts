@@ -122,12 +122,15 @@ export async function POST(req: Request): Promise<Response> {
       model: provider.chat(model),
       messages: modelMessages,
       system: CHAT_SYSTEM_PROMPT,
+      signal: req.signal,
     });
 
     return result.toUIMessageStreamResponse({
       sendReasoning: true,
       originalMessages: allUIMessages,
       onFinish: async ({ responseMessage }) => {
+        if (req.signal.aborted) return;
+
         try {
           const messagesToSave: {
             chatId?: string;
