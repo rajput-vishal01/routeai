@@ -16,12 +16,12 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
   }
 
   const user = await currentUser();
-  const {data:chats} = await getAllChats();
+  const { data: chats } = await getAllChats();
   return (
     <div className="flex h-screen overflow-hidden min-h-screen">
-      <ChatSidebar user={user} chats={chats}/>
+      <ChatSidebar user={user} chats={chats} />
       <main className="flex-1 overflow-hidden">
-        <Header />
+        <Header user={user} />
         {children}
       </main>
     </div>
