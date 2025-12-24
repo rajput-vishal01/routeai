@@ -4,18 +4,18 @@ import Header from "@/modules/chat/components/header";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
-const Layout = async ({
+export default async function Layout({
   children,
-  modal,
 }: {
   children: React.ReactNode;
-  modal: React.ReactNode;
-}) => {
+}) {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
 
-  if (session) return redirect("/");
+  if (session) {
+    redirect("/");
+  }
 
   const user = await currentUser();
 
@@ -28,6 +28,4 @@ const Layout = async ({
       {children}
     </div>
   );
-};
-
-export default Layout;
+}

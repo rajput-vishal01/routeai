@@ -6,7 +6,11 @@ import Header from "@/modules/chat/components/header";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
-const Layout = async ({ children }: { children: React.ReactNode }) => {
+export default async function Layout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -16,16 +20,29 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
   }
 
   const user = await currentUser();
-  const { data: chats } = await getAllChats();
+
+  if (!user) {
+    redirect("/register");
+  }
+
+  const result = await getAllChats();
+  const chats = Array.isArray(result?.data) ? result.data : [];
+
+
+  const headerUser = {
+    name: user.name ?? undefined,
+    email: user.email ?? undefined,
+    image: user.image ?? undefined,
+    createdAt: user.createdAt,
+  };
+
   return (
-    <div className="flex h-screen overflow-hidden min-h-screen">
+    <div className="flex h-screen min-h-screen overflow-hidden">
       <ChatSidebar user={user} chats={chats} />
       <main className="flex-1 overflow-hidden">
-        <Header user={user} />
+        <Header user={headerUser} />
         {children}
       </main>
     </div>
   );
-};
-
-export default Layout;
+}
