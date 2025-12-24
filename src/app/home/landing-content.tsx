@@ -1,271 +1,323 @@
 import Link from "next/link";
-import {
-  ChevronRight,
-  Terminal,
-  Zap,
-  Shield,
-  Layout,
-  Cpu,
-  ArrowUpRight,
-} from "lucide-react";
+import { ChevronRight, ArrowUpRight, Plus } from "lucide-react";
 import Bg from "@/components/bg";
+import light from "@/public/light.png";
+import dark from "@/public/dark.png";
+import Image from "next/image";
+import { FEATURES, STEPS, MODELS } from "@/app/home/data-content";
 
-// --- DATA CONFIGURATION ---
-const FEATURES = [
-  {
-    title: "Multi-Model Router",
-    description: "Switch between free models instantly using OpenRouter and AI SDK.",
-    icon: <Cpu className="w-5 h-5" />,
-  },
-  {
-    title: "Minimal UI",
-    description: "Clean, distraction-free interface inspired by ChatGPT and Vercel.",
-    icon: <Layout className="w-5 h-5" />,
-  },
-  {
-    title: "Fast & Responsive",
-    description: "Optimized for speed with Next.js, streaming, and local caching.",
-    icon: <Zap className="w-5 h-5" />,
-  },
-  {
-    title: "Developer Focused",
-    description: "API-first architecture built with modern tooling and clean logic.",
-    icon: <Terminal className="w-5 h-5" />,
-  },
-  {
-    title: "Privacy First",
-    description: "Your data is never used for training. Context is stored locally.",
-    icon: <Shield className="w-5 h-5" />,
-  },
-  {
-    title: "Always Improving",
-    description: "Experimental platform — new models and features are deployed daily.",
-    icon: <ChevronRight className="w-5 h-5" />,
-  },
-];
+const PlusIcon = ({ className }: { className?: string }) => (
+  <Plus
+    className={`absolute h-4 w-4 -translate-x-1/2 -translate-y-1/2 text-border/60 z-20 ${className}`}
+  />
+);
 
-const STEPS = [
-  { step: "01", title: "Input your prompt", desc: "Ask a question, paste complex code, or request a creative task." },
-  { step: "02", title: "Select Intelligence", desc: "Choose from 50+ free AI models via our unified selector." },
-  { step: "03", title: "Stream Results", desc: "Receive fast, accurate, and contextually aware responses instantly." },
-];
-
-const STATS = [
-  { value: "50+", label: "AI models available" },
-  { value: "<200ms", label: "Time to first token" },
-  { value: "99.9%", label: "Uptime reliability" },
-];
-
-const MODELS = ["Meta Llama", "Mistral AI", "Google Flash", "AllenAI Olmo", "DeepSeek"];
-
-const CTA_CONTENT = {
-  title: "Ready to route your intelligence?",
-  description: "Join developers building the next generation of AI tools with a clean, unified interface. No complex setup, just pure productivity.",
-};
-
-// --- COMPONENT ---
 export default function HomePage() {
   return (
     <main className="relative bg-background min-h-screen text-foreground selection:bg-primary selection:text-primary-foreground overflow-x-hidden">
+      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+        <div
+          className="absolute inset-0 opacity-[0.12]"
+          style={{
+            backgroundImage: `radial-gradient(circle at 1.5px 1.5px, var(--border) 1.5px, transparent 0)`,
+            backgroundSize: "40px 40px",
+          }}
+        />
+        <div className="absolute inset-0 bg-linear-to-b from-transparent via-background/40 to-background" />
+      </div>
+
       <Bg />
 
-      {/* HERO SECTION */}
-      <section className="relative z-10 mx-auto max-w-6xl px-6 pt-32 pb-24 text-center">
-        <div className="mx-auto mb-6 w-fit rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest text-primary animate-in fade-in slide-in-from-top-4 duration-1000">
-          Multi-model AI chat platform
-        </div>
+      <div className="relative z-10 mx-auto max-w-300 border-x border-border/40 bg-background/20 backdrop-blur-[1px]">
+        <PlusIcon className="top-0 left-0" />
+        <PlusIcon className="top-0 right-0" />
 
-        <h1 className="mx-auto max-w-4xl text-5xl font-bold tracking-tight bg-gradient-to-b from-foreground to-foreground/50 bg-clip-text text-transparent sm:text-6xl md:text-7xl">
-          One interface.
-          <br />
-          Multiple AI models.
-        </h1>
+        <section className="relative border-b border-border/40 bg-background overflow-hidden">
+          {/* Hero Background Glow */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-2xl h-[500px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
 
-        <p className="mx-auto mt-6 max-w-2xl text-base text-muted-foreground leading-relaxed">
-          routeAI lets you chat with the best free AI models from a single,
-          fast, minimal interface — built for developers and creators.
-        </p>
-
-        <div className="mt-10 flex flex-wrap justify-center gap-4">
-          <Link
-            href="/register"
-            className="group relative flex items-center gap-2 rounded-full bg-primary px-8 py-3 text-sm font-bold text-primary-foreground transition-all hover:brightness-110 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-primary/20"
-          >
-            Get started for free
-            <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
-          </Link>
-
-          <Link
-            href="/login"
-            className="rounded-full border border-border bg-background/50 backdrop-blur-sm px-8 py-3 text-sm font-bold transition-all hover:bg-muted hover:border-primary/30"
-          >
-            Sign in to account
-          </Link>
-        </div>
-      </section>
-
-      {/* CODE PREVIEW SECTION */}
-      <section className="relative z-10 mx-auto max-w-4xl px-6 pb-24">
-        <div className="group rounded-xl border border-border/50 bg-card/30 backdrop-blur-xl transition-all hover:border-primary/30 shadow-2xl">
-          <div className="flex items-center justify-between border-b border-border/50 px-4 py-3 text-[10px] font-mono text-muted-foreground">
-            <div className="flex gap-2">
-              <div className="h-2.5 w-2.5 rounded-full bg-primary/40 group-hover:bg-primary transition-colors" />
-              <div className="h-2.5 w-2.5 rounded-full bg-border" />
-              <div className="h-2.5 w-2.5 rounded-full bg-border" />
+          {/* Hero Content Layer */}
+          <div className="relative z-10 mx-auto max-w-6xl px-6 pt-32 pb-24 text-center">
+            <div className="mx-auto mb-6 w-fit rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest text-primary animate-in fade-in slide-in-from-top-4 duration-1000">
+              Multi-model AI chat platform
             </div>
-            <span className="opacity-50 font-medium">route-config.ts</span>
-          </div>
-          <div className="p-8 font-mono text-sm leading-relaxed text-foreground/80 overflow-x-auto">
-            <p className="flex gap-2">
-              <span className="text-primary font-bold">const</span> 
-              <span>result =</span> 
-              <span className="text-primary font-bold">await</span> 
-              <span>routeAI.chat({`{`}</span>
-            </p>
-            <p className="pl-6 mt-1 border-l border-primary/20">
-              model: <span className="text-primary/80 font-medium">"meta/llama-3.1-free"</span>,
-            </p>
-            <p className="pl-6 border-l border-primary/20">
-              messages: [{`{ role: "user", content: "..." }`}],
-            </p>
-            <p className="pl-6 border-l border-primary/20">
-              stream: <span className="text-primary font-bold">true</span>
-            </p>
-            <p>{`})`}</p>
-          </div>
-        </div>
-      </section>
 
-      {/* FEATURES GRID */}
-      <section id="features" className="relative z-10 mx-auto max-w-6xl px-6 pb-24">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <h1 className="mx-auto max-w-4xl text-5xl font-black tracking-tighter bg-gradient-to-b from-foreground to-foreground/40 bg-clip-text text-transparent sm:text-7xl md:text-8xl leading-[0.85] mb-8">
+              One interface.
+              <br />
+              Multiple AI models.
+            </h1>
+
+            <p className="mx-auto mt-6 max-w-2xl text-base md:text-lg text-muted-foreground leading-relaxed">
+              routeAI lets you chat with the best free AI models from a single,
+              fast, minimal interface — built for developers and creators.
+            </p>
+
+            <Link
+              href="/register"
+              className="group inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 mt-10 text-sm font-black text-primary-foreground transition-all hover:brightness-110 hover:scale-[1.02] active:scale-[0.98] shadow-2xl shadow-primary/20"
+            >
+              Get started for free
+              <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+            </Link>
+          </div>
+
+          {/* Nested Code Preview - Structural Bridge */}
+          <div className="relative border-t border-border/40 bg-muted/5 p-6 md:p-16">
+            <PlusIcon className="top-0 left-0" />
+            <PlusIcon className="top-0 right-0" />
+            <PlusIcon className="bottom-0 left-0" />
+            <PlusIcon className="bottom-0 right-0" />
+
+            <div className="mx-auto max-w-4xl group rounded-xl border border-border bg-card transition-all hover:border-primary/30 shadow-2xl overflow-hidden text-left">
+              {/* Terminal Header */}
+              <div className="flex items-center justify-between border-b border-border px-4 py-3 text-[10px] font-mono text-muted-foreground bg-muted/30">
+                <div className="flex gap-2">
+                  <div className="h-2.5 w-2.5 rounded-full bg-primary/20 group-hover:bg-primary transition-colors duration-500" />
+                  <div className="h-2.5 w-2.5 rounded-full bg-border" />
+                  <div className="h-2.5 w-2.5 rounded-full bg-border" />
+                </div>
+                <span className="opacity-60 font-medium tracking-widest uppercase">
+                  route-config.ts
+                </span>
+              </div>
+
+              {/* Code Body */}
+              <div className="p-8 font-mono text-sm leading-relaxed text-foreground/90 overflow-x-auto selection:bg-primary/20">
+                <p className="flex gap-2">
+                  <span className="text-primary font-bold">const</span>
+                  <span>result =</span>
+                  <span className="text-primary font-bold">await</span>
+                  <span>routeAI.chat({`{`}</span>
+                </p>
+
+                <div className="pl-6 mt-1 border-l border-primary/20">
+                  <p>
+                    model:{" "}
+                    <span className="text-primary/90 font-medium">
+                      "meta/llama-3.1-free"
+                    </span>
+                    ,
+                  </p>
+                  <p>messages: [{`{ role: "user", content: "..." }`}],</p>
+                  <p>
+                    stream: <span className="text-primary font-bold">true</span>
+                  </p>
+                </div>
+
+                <p>{`})`}</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section
+          id="features"
+          className="relative grid sm:grid-cols-2 lg:grid-cols-3 divide-x divide-y divide-border/40 border-b border-border/40"
+        >
+          <PlusIcon className="bottom-0 left-0" />
+          <PlusIcon className="bottom-0 right-0" />
           {FEATURES.map((item) => (
             <div
               key={item.title}
-              className="group relative overflow-hidden rounded-2xl border border-border/50 bg-card p-8 transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5"
+              className="group p-10 transition-all hover:bg-primary/2"
             >
-              <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-primary/5 text-primary transition-all group-hover:bg-primary group-hover:text-primary-foreground group-hover:scale-110">
+              <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary/5 text-primary transition-all group-hover:bg-primary group-hover:text-primary-foreground group-hover:scale-110 border border-primary/10">
                 {item.icon}
               </div>
-              <h3 className="text-sm font-bold tracking-tight">{item.title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+              <h3 className="text-base font-bold tracking-tight mb-3">
+                {item.title}
+              </h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
                 {item.description}
               </p>
             </div>
           ))}
-        </div>
-      </section>
+        </section>
 
-      {/* MODELS STRIP */}
-      <section id="models" className="relative z-10 border-y border-border/40 bg-muted/5 backdrop-blur-sm">
-        <div className="mx-auto max-w-6xl px-6 py-12 text-center">
-          <p className="mb-8 text-[10px] font-black uppercase tracking-[0.3em] text-primary/60">
-            Built on leading open intelligence
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            {MODELS.map((name) => (
+        <section
+          id="models"
+          className="py-14 border-b border-border/40 bg-muted/5 overflow-hidden"
+        >
+          <div className="flex animate-marquee whitespace-nowrap">
+            {[...MODELS, ...MODELS].map((name, i) => (
               <span
-                key={name}
-                className="rounded-full border border-border/60 bg-background/50 px-5 py-2 text-xs font-semibold text-muted-foreground transition-all hover:text-primary hover:border-primary/40 cursor-default"
+                key={i}
+                className="mx-12 text-[11px] font-black uppercase tracking-[0.4em] text-muted-foreground/30 hover:text-primary transition-all cursor-default"
               >
                 {name}
               </span>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* HOW IT WORKS */}
-      <section className="relative z-10 mx-auto max-w-6xl px-6 py-32">
-        <div className="grid gap-12 lg:grid-cols-3">
+        <section className="relative grid md:grid-cols-3 divide-x divide-border/40 border-b border-border/40">
+          <PlusIcon className="bottom-0 left-0" />
+          <PlusIcon className="bottom-0 right-0" />
           {STEPS.map((item) => (
-            <div key={item.step} className="group relative">
-              <div className="text-[4rem] font-black leading-none text-primary/5 transition-colors group-hover:text-primary/10">
+            <div
+              key={item.step}
+              className="group p-12 hover:bg-primary/1 transition-colors"
+            >
+              <div className="text-[5rem] font-black leading-none text-primary/5 transition-colors group-hover:text-primary/10 select-none">
                 {item.step}
               </div>
-              <div className="relative -mt-8 pl-2">
-                <h3 className="text-lg font-bold tracking-tight">{item.title}</h3>
-                <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
+              <div className="-mt-10">
+                <h3 className="text-xl font-bold tracking-tight mb-4">
+                  {item.title}
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
                   {item.desc}
                 </p>
               </div>
             </div>
           ))}
-        </div>
-      </section>
+        </section>
 
-      {/* STATS SECTION */}
-      <section className="relative z-10 bg-primary text-primary-foreground py-20">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="grid gap-12 text-center sm:grid-cols-3">
-            {STATS.map((stat) => (
-              <div key={stat.label} className="space-y-2">
-                <p className="text-5xl font-bold tracking-tighter italic">
-                  {stat.value}
+        <section className="relative border-b border-border/40 py-32 bg-muted/2 overflow-hidden">
+          <PlusIcon className="absolute top-0 left-0" />
+          <PlusIcon className="absolute top-0 right-0" />
+          <PlusIcon className="absolute bottom-0 left-0" />
+          <PlusIcon className="absolute bottom-0 right-0" />
+
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
+            <h2 className="text-[20vw] font-black uppercase tracking-tighter text-foreground/3 leading-none italic">
+              routeAI
+            </h2>
+          </div>
+
+          <div className="relative mx-auto max-w-4xl px-6 z-10">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-primary/5 blur-[120px] rounded-full -z-10" />
+            <div className="aspect-video rounded-2xl border border-border bg-card shadow-[0_0_50px_-12px_rgba(0,0,0,0.5)] overflow-hidden group transition-all hover:border-primary/40 flex flex-col">
+              <div className="flex items-center justify-between px-5 py-3 border-b border-border bg-muted/40 backdrop-blur-md shrink-0">
+                <div className="flex gap-2">
+                  <div className="h-2.5 w-2.5 rounded-full bg-primary/30 group-hover:bg-primary transition-colors duration-500" />
+                  <div className="h-2.5 w-2.5 rounded-full bg-border" />
+                  <div className="h-2.5 w-2.5 rounded-full bg-border" />
+                </div>
+              </div>
+
+              <div className="relative flex-1 overflow-hidden">
+                <div className="absolute inset-0 bg-primary/2 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none z-10" />
+                {/* Light mode image */}
+                <Image
+                  src={light}
+                  alt="preview light"
+                  fill
+                  priority
+                  className=" object-center dark:hidden"
+                />
+                {/* Dark mode image */}
+                <Image
+                  src={dark}
+                  alt="preview dark"
+                  fill
+                  priority
+                  className=" object-center hidden dark:block"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="relative border-b border-border/40 bg-muted/2">
+          <PlusIcon className="top-0 left-0" />
+          <PlusIcon className="top-0 right-0" />
+          <PlusIcon className="bottom-0 left-0" />
+          <PlusIcon className="bottom-0 right-0" />
+
+          <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-border/40">
+            {[
+              {
+                label: "Availability",
+                value: "99.99%",
+                detail: "Enterprise Uptime",
+              },
+              { label: "Latency", value: "<15ms", detail: "Edge Optimized" },
+              {
+                label: "Security",
+                value: "AES-256",
+                detail: "Zero-Log Policy",
+              },
+              { label: "Inventory", value: "50+", detail: "Live AI Models" },
+            ].map((item, i) => (
+              <div
+                key={i}
+                className="relative p-8 md:p-12 group hover:bg-primary/2 transition-colors overflow-hidden border-b md:border-b-0 border-border/40 last:border-b-0"
+              >
+                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/40 group-hover:text-primary transition-colors mb-4">
+                  {item.label}
                 </p>
-                <p className="text-[10px] font-black uppercase tracking-widest opacity-70">
-                  {stat.label}
+                <p className="text-3xl md:text-5xl font-bold tracking-tighter mb-2 italic">
+                  {item.value}
+                </p>
+                <p className="text-[10px] font-bold text-muted-foreground/50 uppercase tracking-widest">
+                  {item.detail}
                 </p>
               </div>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* FINAL SPOTLIGHT CTA */}
-      <section className="relative z-10 mx-auto max-w-6xl px-6 py-32">
-        <div className="relative overflow-hidden rounded-[2.5rem] border border-primary/20 bg-card p-12 text-center shadow-2xl shadow-primary/10 sm:p-24 group">
-          {/* Spotlight Glows */}
-          <div className="absolute -top-24 -left-24 h-96 w-96 rounded-full bg-primary/5 blur-[100px] transition-all group-hover:bg-primary/10" />
-          <div className="absolute -bottom-24 -right-24 h-96 w-96 rounded-full bg-primary/5 blur-[100px] transition-all group-hover:bg-primary/10" />
+        <footer className="relative border-t border-border/40 bg-muted/5 pt-20 pb-12 px-8 md:px-16 overflow-hidden">
+          <PlusIcon className="top-0 left-0" />
+          <PlusIcon className="top-0 right-0" />
 
-          <div className="relative z-10">
-            <h2 className="mx-auto max-w-2xl text-4xl font-bold tracking-tight sm:text-6xl leading-[1.1]">
-              Ready to <span className="text-primary italic">route</span> your intelligence?
-            </h2>
-            <p className="mx-auto mt-6 max-w-lg text-sm text-muted-foreground leading-relaxed">
-              {CTA_CONTENT.description}
-            </p>
-            <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Link
-                href="/register"
-                className="group flex h-14 items-center justify-center rounded-full bg-primary px-10 text-sm font-black text-primary-foreground transition-all hover:scale-105 active:scale-95 shadow-lg shadow-primary/20"
-              >
-                Get started for free
-                <ArrowUpRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </Link>
-              <Link
-                href="/login"
-                className="flex h-14 items-center justify-center rounded-full border border-border bg-background px-10 text-sm font-bold transition-all hover:bg-muted hover:border-primary/30"
-              >
-                Sign in to account
-              </Link>
+          <div className="grid md:grid-cols-2 gap-16 items-start">
+            <div className="space-y-6">
+              <div className="flex items-center gap-3 font-black tracking-tighter text-3xl">
+                <span className="text-primary">routeAI</span>
+              </div>
+              <p className="text-sm text-muted-foreground max-w-xs leading-relaxed">
+                The unified gateway for open intelligence. Architected for
+                speed, built for privacy.
+              </p>
+              <div className="flex gap-8 text-[11px] font-black uppercase tracking-[0.3em] text-muted-foreground/60">
+                <Link
+                  href="https://github.com/rajput-vishal01"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-primary transition-colors"
+                >
+                  GitHub
+                </Link>
+
+                <Link
+                  href="https://www.linkedin.com/in/askvishal01"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-primary transition-colors"
+                >
+                  Linkedin
+                </Link>
+              </div>
+            </div>
+
+            <div className="flex flex-col md:items-end justify-between h-full">
+              <div className="space-y-4 text-left md:text-right">
+                <Link
+                  href="https://askvishal.in"
+                  className="group inline-flex items-center gap-2 text-sm font-black"
+                >
+                  <span className="text-muted-foreground group-hover:text-foreground transition-colors">
+                    Designed by
+                  </span>
+                  <span className="text-primary border-b border-primary/0 group-hover:border-primary transition-all">
+                    Vishal Kumar
+                  </span>
+                  <ArrowUpRight className="h-3 w-3 text-primary" />
+                </Link>
+              </div>
+
+              <div className="mt-12 pt-8 border-t border-border/10 w-full text-left md:text-right">
+                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/30 italic">
+                  © 2025 routeAI Inc.
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* FOOTER */}
-      <footer className="relative z-10 border-t border-border/40 py-12 bg-background/50 backdrop-blur-md">
-        <div className="mx-auto max-w-6xl px-6 flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="flex items-center gap-6 text-[10px] font-bold uppercase tracking-widest text-muted-foreground/50">
-            <span>© 2025 routeAI</span>
-            <Link href="#" className="hover:text-primary transition-colors">Privacy</Link>
-            <Link href="#" className="hover:text-primary transition-colors">Terms</Link>
-          </div>
-          <div className="flex gap-8">
-            {["GitHub", "Twitter", "Discord"].map((social) => (
-              <Link
-                key={social}
-                href="#"
-                className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground hover:text-primary transition-all"
-              >
-                {social}
-              </Link>
-            ))}
-          </div>
-        </div>
-      </footer>
+        </footer>
+      </div>
     </main>
   );
 }

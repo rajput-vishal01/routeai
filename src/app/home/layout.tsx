@@ -21,7 +21,10 @@ const Layout = async ({
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Header user={user} />
+      <div className="sticky top-0 z-50 bg-background/80 backdrop-blur border-b border-border">
+        <Header user={user} />
+      </div>
+
       {children}
     </div>
   );
