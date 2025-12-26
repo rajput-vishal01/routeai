@@ -1,4 +1,7 @@
 import { auth } from "@/lib/auth";
 import { toNextJsHandler } from "better-auth/next-js";
 
-export const { POST, GET } = toNextJsHandler(auth);
+// ✅ REQUIRED: BetterAuth does NOT work on Edge
+export const runtime = "nodejs";
+
+export const { GET, POST } = toNextJsHandler(auth);
