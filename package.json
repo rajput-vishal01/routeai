@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "docker compose up -d && next dev",
     "postinstall": "prisma generate",
-    "build": "next build",
+    "build": "prisma generate && prisma migrate deploy && next build",
+    "vercel-build": "prisma generate && prisma migrate deploy && next build",
     "start": "next start",
     "lint": "eslint"
   },
