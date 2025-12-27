@@ -16,13 +16,13 @@ export default async function Layout({
   });
 
   if (!session) {
-    redirect("/register");
+    redirect("/home");
   }
 
   const user = await currentUser();
 
   if (!user) {
-    redirect("/register");
+    redirect("/home");
   }
 
   const result = await getAllChats();

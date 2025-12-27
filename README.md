@@ -1,12 +1,13 @@
+![Home Page](./src/public/bg-git.png)
+
 # RouteAI — Multi-Model AI Chat Platform
 
-RouteAI is a modern AI chat application built with [Next.js](https://nextjs.org), providing seamless access to 50+ free AI models through OpenRouter integration. It allows users to interact with multiple AI models from a unified interface, upload files and images, and manage conversation history—all with a clean, distraction-free design.
+RouteAI is a modern AI chat application built with Next.js, providing seamless access to 50+ free AI models through OpenRouter integration. It allows users to interact with multiple AI models from a unified interface, upload files and images, and manage conversation history—all with a clean, distraction-free design.
 
 ## Features
 
 - 🤖 Access 50+ free AI models from OpenAI, Anthropic, Google, Meta, and more
 - 💬 Unified chat interface with real-time streaming responses
-- 📎 Upload images and files for multimodal AI interactions
 - 🔄 Switch between models seamlessly without losing conversation context
 - 🔐 Secure authentication with GitHub/Google via BetterAuth
 - 💾 Persistent conversation history and management
@@ -33,8 +34,6 @@ RouteAI is a modern AI chat application built with [Next.js](https://nextjs.org)
 
 ```bash
 npm install
-# or
-yarn install
 ```
 
 ### 2. Set up environment variables
@@ -69,15 +68,6 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## API Endpoints
-
-- `POST /api/chat` – Stream AI responses from selected model
-- `POST /api/chat/history` – Save and retrieve conversation history
-- `GET /api/models` – List available AI models from OpenRouter
-- `POST /api/upload` – Handle file and image uploads
-- `POST /api/auth/register` – Register a new user
-- `POST /api/auth/signin` – Sign in with OAuth providers
-
 ## Use Cases
 
 - **Model Comparison**: Test prompts across different AI models to find the best fit
@@ -85,6 +75,19 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 - **Research**: Explore capabilities of various models in one unified interface
 - **Productivity**: Get work done with a fast, distraction-free chat experience
 - **Learning**: Experiment with cutting-edge AI models for free
----
 
-Built with ❤️ using Next.js and OpenRouter
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## Contact
+
+Feel free to reach out if you have any questions!
+
+- **Portfolio** : [askvishal.in](https://askvishal.in/)
+- **GitHub**: [rajput-vishal01](https://github.com/rajput-vishal01)
+- **Email**: [askvishal.me@gmail.com](mailto:askvishal.me@gmail.com)

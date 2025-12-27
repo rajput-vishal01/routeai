@@ -1,6 +1,6 @@
+import Navbar from "@/components/navbar";
 import { auth } from "@/lib/auth";
 import { currentUser } from "@/modules/authentication/actions";
-import Header from "@/modules/chat/components/header";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -19,12 +19,13 @@ export default async function Layout({
 
   const user = await currentUser();
 
+  if (user) {
+    redirect("/");
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
-      <div className="sticky top-0 z-50 bg-background/80 backdrop-blur border-b border-border">
-        <Header user={user} />
-      </div>
-
+      <Navbar/>
       {children}
     </div>
   );
